@@ -1,6 +1,10 @@
+import LoginForm from "./_components/LoginForm"
+
 function LoginPage() {
     return (
-        <div>LoginPage</div>
+        <div className="min-h-screen flex justify-center items-center">
+            <LoginForm/>
+        </div>
     )
 }
 
