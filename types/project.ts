@@ -22,3 +22,8 @@ export const POINTS_RULES:Record<EquipmentType, string[]> = {
   "LIGHT": ["cmdOnOff", "dimming", "alarm"],
   "SENSOR": ["actualTemp", "actualHumidity", "battery", "alarm", "signalStrength"]
 }
+
+export type EquipmentPoint = {
+    equipment_id:number;
+    name:string;
+}
