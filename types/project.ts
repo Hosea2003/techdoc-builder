@@ -3,7 +3,7 @@ export type Project = {
     name:string;
     client:string;
     date:string;
-    equipment?:Equipment[]
+    equipments?:Equipment[]
 };
 
 export type EquipmentType = "HVAC"|"LIGHT"|"SENSOR";

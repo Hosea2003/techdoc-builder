@@ -10,7 +10,7 @@ function ProjectDetailsWrapper({project}:{project:Project}) {
 
     useEffect(()=>{
         addProjects([project]);
-        addEquipmentToProject(project.id, project.equipment??[]);
+        addEquipmentToProject(project.id, project.equipments??[]);
     }, [project, addProjects, addEquipmentToProject]);
 
     return (

@@ -3,7 +3,8 @@ import React from 'react'
 import AddEqupiment from './AddEquipment';
 
 function EquipmentList({project}:{project:Project}) {
-  const equiments = project.equipment??[];
+  console.log(project)
+  const equiments = project.equipments??[];
   return (
     <div className='flex flex-col gap-2'>
       <AddEqupiment projectId={project.id}/>
