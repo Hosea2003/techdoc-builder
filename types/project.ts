@@ -16,3 +16,9 @@ export type Equipment = {
     model:string;
     quantity:number;
 }
+
+export const POINTS_RULES:Record<EquipmentType, string[]> = {
+  "HVAC": ["cmdOnOff", "setpointTemp", "actualTemp", "alarm"],
+  "LIGHT": ["cmdOnOff", "dimming", "alarm"],
+  "SENSOR": ["actualTemp", "actualHumidity", "battery", "alarm", "signalStrength"]
+}
