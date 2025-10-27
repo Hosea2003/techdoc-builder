@@ -3,8 +3,10 @@
 import { useProjectStore } from '@/store/projectStore'
 import React from 'react'
 import SaveProjectForm from './SaveProjectForm';
+import {useRouter} from "nextjs-toploader/app"
 
 function ProjectList() {
+  const router = useRouter();
   const {projects} = useProjectStore();
   return (
     <div className="overflow-x-auto rounded-lg shadow border border-input">
@@ -28,7 +30,7 @@ function ProjectList() {
         <tbody className="divide-y">
           {projects.map((row, index) => (
             <tr key={index} className='hover:bg-sidebar cursor-pointer'
-              onClick={()=>console.log(row.id)}
+              onClick={()=>router.push(`/projects/${row.id}`)}
             >
               <td className="px-6 py-4 whitespace-nowrap">
                 {row.name}
