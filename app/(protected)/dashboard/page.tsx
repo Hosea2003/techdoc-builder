@@ -1,7 +1,9 @@
-export default function Home() {
+import { fetchProjects } from "../_actions/project-actions";
+import ProjectDashboard from "../_components/dashboard/ProjectDashboard";
+
+export default async function Home() {
+  const projects = await fetchProjects();
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      hello
-    </main>
+    <ProjectDashboard projects={projects}/>
   );
 }

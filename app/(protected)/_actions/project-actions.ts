@@ -39,7 +39,13 @@ export async function fetchProjects():Promise<Project[]>{
 
     const {data:projects, error} = await supabase
         .from("projects")
-        .select();
+        .select(`
+            *,
+            equipments(
+                *,
+                equipment_points(id)
+            )
+        `);
 
     if(error){
         return []

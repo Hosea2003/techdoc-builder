@@ -15,6 +15,7 @@ export type Equipment = {
     room:string;
     model:string;
     quantity:number;
+    equipment_points?:EquipmentPoint[]
 }
 
 export const POINTS_RULES:Record<EquipmentType, string[]> = {
@@ -24,6 +25,7 @@ export const POINTS_RULES:Record<EquipmentType, string[]> = {
 }
 
 export type EquipmentPoint = {
+    id:number;
     equipment_id:number;
     name:string;
 }
