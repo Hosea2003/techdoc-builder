@@ -12,10 +12,12 @@ import { saveProjectAction, SaveProjectActionResponse, updateProjectAction } fro
 import {ClipLoader} from "react-spinners"
 import { Project } from '@/types/project';
 import { Card, CardContent } from '@/components/ui/card';
+import { useProjectStore } from '@/store/projectStore';
 
 function SaveProjectForm({project}:{project?:Project}) {
 
     const [open, setOpen] = useState(false);
+    const {addProjects} = useProjectStore();
     const form = useForm<ProjectSchema>({
         resolver:zodResolver(projectSchema),
         defaultValues:{
@@ -35,15 +37,17 @@ function SaveProjectForm({project}:{project?:Project}) {
         else{
             response = await saveProjectAction(data);
         }
-        if(response.error){
+        if(response.error|| !response.project){
             form.setError("root", {message:response.error})
             return;
         }
+        addProjects([response.project], true)
         form.reset({
             name:"",
             client:"",
             date:new Date()
         })
+        setOpen(false);
     }
 
     useEffect(()=>{
@@ -58,11 +62,9 @@ function SaveProjectForm({project}:{project?:Project}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-            <div onClick={(e) => e.stopPropagation()}>
-                <Button>
+            <Button>
                 {project ? "Modifier" : "Ajouter"}
-                </Button>
-            </div>
+            </Button>
         </DialogTrigger>
         <DialogContent>
             <Form {...form}>

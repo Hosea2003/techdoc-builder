@@ -41,7 +41,9 @@ function ProjectList() {
               <td className="px-6 py-4 whitespace-nowrap">
                 {row.date}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
+              <td className="px-6 py-4 whitespace-nowrap flex space-x-2"
+                onClick={e=>e.stopPropagation()}
+              >
                 <SaveProjectForm project={row}/>
               </td>
             </tr>

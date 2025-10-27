@@ -3,21 +3,30 @@ import { create } from "zustand";
 
 interface ProjectState {
     projects: Project[];
-    addProjects:(projecst:Project[])=>void;
+    addProjects:(projecst:Project[], forceAdd?:boolean)=>void;
     addEquipmentToProject: (projectId: number, equipments: Equipment[]) => void;
 }
 
 export const useProjectStore = create<ProjectState>((set)=>({
     projects:[],
-    addProjects: (newProjects: Project[]) =>
-    set((state) => {
-      const filteredProjects = newProjects.filter(
-        (p) => !state.projects.some((existing) => existing.id === p.id)
-      );
+    addProjects: (newProjects: Project[], forceAdd = false) =>
+        set((state) => {
+        const updatedProjects = newProjects.map((newProj) => {
+            const existing = state.projects.find((p) => p.id === newProj.id);
+            if (existing) {
+            if (forceAdd) {
+                return { ...newProj, equipments: existing.equipments ?? [] };
+            }
+            return existing;
+            }
+            return newProj;
+        });
 
-      return {
-        projects: [...state.projects, ...filteredProjects],
-      };
+        const remainingProjects = state.projects.filter(
+            (p) => !newProjects.some((np) => np.id === p.id)
+        );
+
+        return { projects: [...remainingProjects, ...updatedProjects] };
     }),
     addEquipmentToProject: (projectId, equipments) =>
         set((state) => ({

@@ -132,7 +132,7 @@ export default function ProjectDashboard({ projects }: ProjectDashboardProps) {
           <div>Total Equipments: {totalEquipments}</div>
           <div>Total Points: {totalPoints}</div>
           <div>
-            Distribution by Type:
+            Distribution par Type:
             {Object.entries(typeDistribution).map(([type, count]) => (
               <div key={type}>
                 {type}: {count}
