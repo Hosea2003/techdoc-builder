@@ -58,9 +58,11 @@ function SaveProjectForm({project}:{project?:Project}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-            <Button>
-                {project ?"Modifier":"Ajouter"}
-            </Button>
+            <div onClick={(e) => e.stopPropagation()}>
+                <Button>
+                {project ? "Modifier" : "Ajouter"}
+                </Button>
+            </div>
         </DialogTrigger>
         <DialogContent>
             <Form {...form}>
