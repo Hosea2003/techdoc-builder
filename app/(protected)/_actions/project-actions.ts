@@ -32,3 +32,18 @@ export async function saveProjectAction(data:ProjectSchema):Promise<SaveProjectA
         project
     }
 }
+
+
+export async function fetchProjects():Promise<Project[]>{
+    const supabase = await createClient();
+
+    const {data:projects, error} = await supabase
+        .from("projects")
+        .select();
+
+    if(error){
+        return []
+    }
+
+    return projects;
+}

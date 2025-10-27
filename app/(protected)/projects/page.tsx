@@ -1,14 +1,11 @@
 import React from 'react'
-import SaveProjectForm from '../_components/projects/SaveProjectForm'
+import { fetchProjects } from '../_actions/project-actions'
+import ProjectWrapper from '../_components/projects/ProjectWrapper';
 
-function ProjectsPage() {
+async function ProjectsPage() {
+    const projects = await fetchProjects();
   return (
-    <div className='p-3 flex flex-col gap-4'>
-        <div className="flex w-full flex-wrap justify-between items-center">
-            <p className="text-3xl">Projets</p>
-            <SaveProjectForm/>
-        </div>
-    </div>
+    <ProjectWrapper projects={projects}/>
   )
 }
 
