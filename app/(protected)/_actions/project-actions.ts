@@ -70,3 +70,19 @@ export async function updateProjectAction(projectId:number, data:ProjectSchema):
         project
     }
 }
+
+export async function fetchProjectDetails(projectId:number):Promise<Project|null>{
+    const supabase = await createClient();
+    const { data, error } = await supabase
+    .from('projects')
+    .select('id, name, client, date, equipments(id, type, room, model, quantity)')
+    .eq('id', projectId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching project details:', error.message);
+    return null;
+  }
+
+  return data;
+}
