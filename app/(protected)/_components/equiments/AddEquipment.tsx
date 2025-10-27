@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { ClipLoader } from 'react-spinners';
 import { addNewEquipment } from '../../_actions/equipment-actions';
 import { Card, CardContent } from '@/components/ui/card';
+import { useProjectStore } from '@/store/projectStore';
 
 function AddEquipment({projectId}:{projectId:number}) {
 
@@ -27,16 +28,21 @@ function AddEquipment({projectId}:{projectId:number}) {
     }
   });
 
+  const {addEquipmentToProject} = useProjectStore();
+
   const isSubmitting = form.formState.isSubmitting;
 
   const handleSaveEquipment = async (data:EquipmentSchema)=>{
     const response = await addNewEquipment(data, projectId);
 
-    if(response.error){
+    if(response.error || !response.equipment){
       form.setError("root", {
         message:response.error
       });
+      return;
     }
+
+    addEquipmentToProject(projectId, [response.equipment]);
   }
 
   return (
