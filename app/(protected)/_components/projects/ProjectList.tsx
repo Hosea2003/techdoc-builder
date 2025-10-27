@@ -2,6 +2,7 @@
 
 import { useProjectStore } from '@/store/projectStore'
 import React from 'react'
+import SaveProjectForm from './SaveProjectForm';
 
 function ProjectList() {
   const {projects} = useProjectStore();
@@ -39,7 +40,7 @@ function ProjectList() {
                 {row.date}
               </td>
               <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
-                
+                <SaveProjectForm project={row}/>
               </td>
             </tr>
           ))}

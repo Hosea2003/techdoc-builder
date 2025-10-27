@@ -2,16 +2,18 @@
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { projectSchema, ProjectSchema } from '../../_schema/project';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { saveProjectAction } from '../../_actions/project-actions';
+import { saveProjectAction, SaveProjectActionResponse, updateProjectAction } from '../../_actions/project-actions';
 import {ClipLoader} from "react-spinners"
+import { Project } from '@/types/project';
+import { Card, CardContent } from '@/components/ui/card';
 
-function SaveProjectForm() {
+function SaveProjectForm({project}:{project?:Project}) {
 
     const [open, setOpen] = useState(false);
     const form = useForm<ProjectSchema>({
@@ -26,7 +28,13 @@ function SaveProjectForm() {
     const isSubmitting = form.formState.isSubmitting;
 
     const handleSaveProject = async (data:ProjectSchema)=>{
-        const response = await saveProjectAction(data);
+        let response:SaveProjectActionResponse;
+        if(project){
+            response = await updateProjectAction(project.id, data);
+        }
+        else{
+            response = await saveProjectAction(data);
+        }
         if(response.error){
             form.setError("root", {message:response.error})
             return;
@@ -38,11 +46,20 @@ function SaveProjectForm() {
         })
     }
 
+    useEffect(()=>{
+        if(project){
+            form.reset({
+                ...project,
+                date:new Date(project.date)
+            })
+        }
+    }, [project]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
             <Button>
-                Ajouter un projet
+                {project ?"Modifier":"Ajouter"}
             </Button>
         </DialogTrigger>
         <DialogContent>
@@ -50,7 +67,7 @@ function SaveProjectForm() {
                 <form className='flex flex-col gap-4'
                     onSubmit={form.handleSubmit(handleSaveProject)}
                 >
-                    <p className="text-xl">Add project</p>
+                    <p className="text-xl">{project?"Modifier un projet":"Ajouter un projet"}</p>
                     <FormField
                         name='name'
                         control={form.control}
@@ -86,6 +103,14 @@ function SaveProjectForm() {
                             </FormItem>
                         )}
                     />
+                    {form.formState.errors.root && (
+                        <Card>
+                            <CardContent>
+                                <p className='text-sm text-destructive'>{form.formState.errors.root.message}</p>
+                            </CardContent>
+                        </Card>
+                    )}
+
                     <div className="flex gap-2 justify-end">
                         <Button variant={"secondary"} type='button'
                             onClick={()=>setOpen(false)}
@@ -98,10 +123,9 @@ function SaveProjectForm() {
                             {isSubmitting?(
                                 <>
                                     <ClipLoader color='white' size={20}/>
-                                    En ajout
+                                    {project?"Modification":"Ajout"}
                                 </>
-                            ):"Ajouter"}
-                            Ajouter
+                            ):project?"Modifier":"Ajouter"}
                         </Button>
                     </div>
                 </form>
