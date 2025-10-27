@@ -13,6 +13,7 @@ import {ClipLoader} from "react-spinners"
 import { Project } from '@/types/project';
 import { Card, CardContent } from '@/components/ui/card';
 import { useProjectStore } from '@/store/projectStore';
+import { Pen } from 'lucide-react';
 
 function SaveProjectForm({project}:{project?:Project}) {
 
@@ -62,9 +63,13 @@ function SaveProjectForm({project}:{project?:Project}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-            <Button>
-                {project ? "Modifier" : "Ajouter"}
-            </Button>
+            {project?(
+                <Button variant={"secondary"}>
+                    <Pen/>
+                </Button>
+            ):(
+                <Button>Ajouter</Button>
+            )}
         </DialogTrigger>
         <DialogContent>
             <Form {...form}>

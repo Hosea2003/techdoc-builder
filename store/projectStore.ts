@@ -5,6 +5,7 @@ interface ProjectState {
     projects: Project[];
     addProjects:(projecst:Project[], forceAdd?:boolean)=>void;
     addEquipmentToProject: (projectId: number, equipments: Equipment[]) => void;
+    removeProject:(projectId:number)=>void
 }
 
 export const useProjectStore = create<ProjectState>((set)=>({
@@ -36,4 +37,7 @@ export const useProjectStore = create<ProjectState>((set)=>({
             : proj
         ),
     })),
+    removeProject:(projectId:number)=>set((state)=>({
+        projects:state.projects.filter(p=>p.id!==projectId)
+    }))
 }));

@@ -4,6 +4,7 @@ import { useProjectStore } from '@/store/projectStore'
 import React from 'react'
 import SaveProjectForm from './SaveProjectForm';
 import {useRouter} from "nextjs-toploader/app"
+import RemoveProject from './RemoveProject';
 
 function ProjectList() {
   const router = useRouter();
@@ -45,6 +46,7 @@ function ProjectList() {
                 onClick={e=>e.stopPropagation()}
               >
                 <SaveProjectForm project={row}/>
+                <RemoveProject projectId={row.id}/>
               </td>
             </tr>
           ))}

@@ -92,3 +92,24 @@ export async function fetchProjectDetails(projectId:number):Promise<Project|null
 
   return data;
 }
+
+export type DeleteProjectActionResponse = {
+  error?: string;
+  projectId?: number;
+};
+
+export async function deleteProjectAction(projectId: number): Promise<DeleteProjectActionResponse> {
+    const supabase = await createClient();
+
+    const { error } = await supabase
+        .from("projects")
+        .delete()
+        .eq("id", projectId);
+
+    if (error) {
+        console.error("Error deleting project:", error.message);
+        return { error: error.message };
+    }
+
+    return { projectId };
+}

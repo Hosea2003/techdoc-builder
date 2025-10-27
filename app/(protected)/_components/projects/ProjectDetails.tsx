@@ -5,6 +5,7 @@ import React from 'react'
 import SaveProjectForm from './SaveProjectForm';
 import EquipmentList from '../equiments/EquipmentList';
 import { Button } from '@/components/ui/button';
+import RemoveProject from './RemoveProject';
 
 function ProjectDetails({project}:{project?:Project}) {
 
@@ -22,6 +23,7 @@ function ProjectDetails({project}:{project?:Project}) {
             </div>
             <div className="flex gap-4 flex-wrap">
                 <SaveProjectForm project={project}/>
+                <RemoveProject projectId={project.id}/>
                 <Button
                     onClick={() => window.open(`/api/projects/${project.id}/export/pdf`, '_blank')}
                     variant={"secondary"}
