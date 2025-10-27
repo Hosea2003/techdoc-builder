@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { saveProjectAction } from '../../_actions/project-actions';
+import {ClipLoader} from "react-spinners"
 
 function SaveProjectForm() {
 
@@ -94,6 +95,12 @@ function SaveProjectForm() {
                         <Button
                             disabled={isSubmitting}
                         >
+                            {isSubmitting?(
+                                <>
+                                    <ClipLoader color='white' size={20}/>
+                                    En ajout
+                                </>
+                            ):"Ajouter"}
                             Ajouter
                         </Button>
                     </div>
